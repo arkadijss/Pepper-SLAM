@@ -1,4 +1,5 @@
 <launch>
+    <param name="use_sim_time" value="true" />
 
     <!-- Depth Image -> Pointcloud -->
     <node pkg="nodelet" type="nodelet" args="manager" name="depth_image_nodelet_manager" output="screen"/>
@@ -38,4 +39,9 @@
         <param name="delta" value="0.04" />
     </node>
 
+    <!-- Trajectory path -->
+    <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_server_gmapping" output="screen"> 
+        <param name="/trajectory_update_rate" value="20.0" />
+        <param name="/trajectory_publish_rate" value="20.0" />
+    </node>
 </launch>
