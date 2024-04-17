@@ -11,13 +11,14 @@
     <node pkg="perception" type="depth_estimation.py" name="depth_estimation">
         <!-- Remap topics -->
         <remap from="/camera/image_raw" to="/naoqi_driver/camera/front/image_raw"/>
+        <remap from="/camera/camera_info" to="/naoqi_driver/camera/front/camera_info"/>
     </node>
 
     <!-- Depth Image -> Pointcloud -->
     <node pkg="nodelet" type="nodelet" args="manager" name="depth_image_nodelet_manager" output="screen"/>
     <node pkg="nodelet" type="nodelet" name="pepper_pointcloud" args="load depth_image_proc/point_cloud_xyz depth_image_nodelet_manager --no-bond">
-        <remap from="camera_info" to="/naoqi_driver/camera/front/camera_info"/>
-        <remap from="image_rect" to="/depth_nn"/>
+        <remap from="camera_info" to="/depth_nn/camera_info"/>
+        <remap from="image_rect" to="/depth_nn/image"/>
         <remap from="points" to="/points_nn"/>
     </node>
 
