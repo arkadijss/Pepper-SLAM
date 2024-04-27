@@ -1,3 +1,5 @@
 opencv-python
 pynput
 qi
+pandas
+matplotlib

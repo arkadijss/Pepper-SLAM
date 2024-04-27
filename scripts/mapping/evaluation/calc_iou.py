@@ -7,7 +7,7 @@ import poly
 
 def main():
     # Load map
-    map_obj = map.Map("base.yaml")
+    map_obj = map.Map("map.yaml")
     # Translation step
     t_step = 5
     # Rotation step

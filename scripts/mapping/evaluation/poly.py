@@ -73,3 +73,26 @@ class Poly:
             self._pts_map = self.pts_pix_to_map(*self.map_shape[:2])
 
         return self._pts_map
+
+    def tr_pts_map(self, dx, dy):
+        self._pts_map += np.array([dx, dy])
+
+    def rot_pts_map(self, angle):
+        rot_mat = cv2.getRotationMatrix2D(
+            (self.map_shape[1] // 2, self.map_shape[0] // 2), angle, 1
+        )
+        self._pts_map = (
+            cv2.transform(np.array([self._pts_map]), rot_mat).squeeze().astype(int)
+        )
+
+    def pts_map_to_pix(self):
+        self._pts_pix = self._pts_map - np.array(self.map_shape[:2]) // 2
+        return self._pts_pix
+
+    def pts_pix_to_m(self):
+        self._pts_m = self._pts_pix * self.resolution
+        return self._pts_m
+
+    def pts_map_to_m(self):
+        self.pts_map_to_pix()
+        return self.pts_pix_to_m()
