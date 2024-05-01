@@ -30,7 +30,7 @@
         <param name="range_max" type="double" value="8.0" />
         <param name="use_inf" type="boolean" value="true" />
         <param name="min_height" type="double" value="0.05" />
-        <param name="max_height" type="double" value="0.5" />
+        <param name="max_height" type="double" value="1.0" />
         <param name="target_frame" type="string" value="base_link" />
         <param name="concurrency_level" type="int" value="0" />
     </node>
@@ -51,6 +51,8 @@
         <param name="xmax" value="20.0" />
         <param name="ymax" value="20.0" />
         <param name="delta" value="0.05" />
+
+        <param name="minimumScore" value="50.0" />
     </node>
 
     <!-- Trajectory path -->
