@@ -86,7 +86,9 @@ class Poly:
         )
 
     def pts_map_to_pix(self):
-        self._pts_pix = self._pts_map - np.array(self.map_shape[:2]) // 2
+        self._pts_pix = self._pts_map - np.array(
+            [self.map_shape[1] // 2, self.map_shape[0] // 2]
+        )
         return self._pts_pix
 
     def pts_pix_to_m(self):
