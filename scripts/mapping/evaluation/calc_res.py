@@ -26,7 +26,7 @@ def main():
 
     # Ground truth polygon
     poly_gt_m = np.array(
-        [[-4.5, 2.5], [-4.5, -2.5], [4.5, -2.5], [4.5, 2.5], [-4.5, 2.5]]
+        [[-4.62, 2.68], [-4.62, -2.68], [4.62, -2.68], [4.62, 2.68], [-4.62, 2.68]]
     )
     poly_gt = poly.Poly(
         _pts_m=poly_gt_m,
@@ -35,11 +35,37 @@ def main():
     )
 
     # Ground truth trajectory
-    traj_gt_ts = np.array([55, 110, 150, 205])
-    traj_gt_pos = np.array([[0, -1.5], [3, 0], [0, 1.5], [-3, 0]])
+    traj_gt_ts = np.array(
+        [44, 98, 158, 220, 265, 313, 362, 415, 460, 509, 556, 613, 780, 960]
+    )
+    traj_gt_pos = np.array(
+        [
+            [0, -1.5],
+            [2.7, 0],
+            [0, 1.5],
+            [-2.7, 0],
+            [0, -1.5],
+            [2.7, 0],
+            [0, 1.5],
+            [-2.7, 0],
+            [0, -1.5],
+            [2.7, 0],
+            [0, 1.5],
+            [-2.7, 0],
+            [2.7, 0],
+            [-2.7, 0],
+        ]
+    )
+    traj_gt_poly = poly.Poly(
+        _pts_m=traj_gt_pos,
+        resolution=map_obj.resolution,
+        map_shape=map_obj.map_img.shape,
+    )
 
     # Estimated trajectory
-    traj_obj = traj.Trajectory("traj.csv")
+    # Reference start timestamp
+    ts_start = 1711648428
+    traj_obj = traj.Trajectory("traj.csv", ts_start)
     # Extract point positions at timestamps
     traj_obj_pos = traj_obj.get_pos_at_ts(traj_gt_ts)
     # Invert y coordinates
@@ -79,9 +105,12 @@ def main():
 
     while True:
         map_img = map.draw_crosshair(map_obj.map_img)
-        map_img = poly.draw_poly(
-            map_img, poly_gt.pts_map, color=(0, 255, 0)
-        )  # Green for GT polygon
+        # Green for GT
+        map_img = poly.draw_poly(map_img, poly_gt.pts_map, color=(0, 255, 0))  # polygon
+        map_img = draw_points(
+            map_img, traj_gt_poly.pts_map, color=(0, 255, 0), thickness=2
+        )  # trajectory
+
         if len(map_obj.poly.pts_map) >= 4:
             # IoU
             iou = poly.calculate_iou(
