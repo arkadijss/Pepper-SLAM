@@ -17,14 +17,12 @@ def loc_err(traj_est_pos, traj_gt_pos):
 
 
 class Trajectory:
-    def __init__(self, csv_file):
-        self.read_data(csv_file)
+    def __init__(self, csv_file, ts_start):
+        self.read_data(csv_file, ts_start)
 
-    def read_data(self, csv_file):
+    def read_data(self, csv_file, ts_start):
         data = pd.read_csv(csv_file)
-        self.ts = (
-            data["Timestamp"] - data["Timestamp"].iloc[0]
-        ).values  # Normalize timestamps
+        self.ts = (data["Timestamp"] - ts_start).values  # Normalize timestamps
         self.pos = data[["X", "Y", "Z"]].values
         self.orientation = data[
             ["Orientation_X", "Orientation_Y", "Orientation_Z", "Orientation_W"]
