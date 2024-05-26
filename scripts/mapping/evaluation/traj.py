@@ -3,13 +3,14 @@ import pandas as pd
 
 
 def quaternion_to_z_rotation(quaternion):
-    # Extract x, y, z, w components
     x, y, z, w = quaternion
 
-    # Compute Euler angle
-    z_rotation = np.arctan2(2 * (x * z + y * w), 1 - 2 * (z**2 + w**2))
+    # Compute the yaw angle from the quaternion
+    siny_cosp = 2 * (w * z + x * y)
+    cosy_cosp = 1 - 2 * (y * y + z * z)
+    yaw = np.arctan2(siny_cosp, cosy_cosp)
 
-    return z_rotation
+    return yaw
 
 
 def loc_err(traj_est_pos, traj_gt_pos):
@@ -36,4 +37,4 @@ class Trajectory:
 
     def get_pos_at_ts(self, ts):
         indices = np.argmin(np.abs(self.ts[:, np.newaxis] - ts), axis=0)
-        return self.pos[indices]
+        return self.pos[indices], indices

@@ -77,10 +77,10 @@ class Poly:
     def tr_pts_map(self, dx, dy):
         self._pts_map += np.array([dx, dy])
 
-    def rot_pts_map(self, angle):
-        rot_mat = cv2.getRotationMatrix2D(
-            (self.map_shape[1] // 2, self.map_shape[0] // 2), angle, 1
-        )
+    def rot_pts_map(self, angle, center=None):
+        if center is None:
+            center = [self.map_shape[1] // 2, self.map_shape[0] // 2]
+        rot_mat = cv2.getRotationMatrix2D(center, angle, 1)
         self._pts_map = (
             cv2.transform(np.array([self._pts_map]), rot_mat).squeeze().astype(int)
         )

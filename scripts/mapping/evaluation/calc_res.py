@@ -71,7 +71,7 @@ def main():
     ts_start = 1711648428
     traj_obj = traj.Trajectory("traj.csv", ts_start)
     # Extract point positions at timestamps
-    traj_obj_pos = traj_obj.get_pos_at_ts(traj_gt_ts)
+    traj_obj_pos, pos_idxs = traj_obj.get_pos_at_ts(traj_gt_ts)
     # Invert y coordinates
     traj_obj_pos[:, 1] *= -1
     # Convert to 2D
@@ -85,7 +85,22 @@ def main():
     # Initialize trajectory map points
     traj_poly.pts_map
 
-    # Result file
+    # Align the estimated and ground truth data using the first point
+    # Translate map and trajectory
+    orig_est = traj_poly.pts_map[0]
+    orig_gt = traj_gt_poly.pts_map[0]
+    offset = orig_gt - orig_est
+    map_obj.translate(*offset)
+    traj_poly.tr_pts_map(*offset)
+
+    # Rotate map and trajectory
+    center = (int(orig_gt[0]), int(orig_gt[1]))
+    quart = traj_obj.orientation[pos_idxs[0]]
+    z_angle = traj.quaternion_to_z_rotation(quart)
+    z_angle_deg = np.rad2deg(z_angle)
+    map_obj.rotate(-z_angle_deg, center)
+    traj_poly.rot_pts_map(-z_angle_deg, center)
+
     res_path = "results.csv"
     res_dict = {
         "ts": traj_gt_ts,
