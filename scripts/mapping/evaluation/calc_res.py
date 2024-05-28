@@ -26,7 +26,7 @@ def main():
 
     # Ground truth polygon
     poly_gt_m = np.array(
-        [[-4.62, 2.68], [-4.62, -2.68], [4.62, -2.68], [4.62, 2.68], [-4.62, 2.68]]
+        [[-4.52, 2.98], [-4.52, -2.98], [4.52, -2.98], [4.52, 2.98], [-4.52, 2.98]]
     )
     poly_gt = poly.Poly(
         _pts_m=poly_gt_m,
@@ -40,22 +40,26 @@ def main():
     )
     traj_gt_pos = np.array(
         [
-            [0, -1.5],
-            [2.7, 0],
-            [0, 1.5],
-            [-2.7, 0],
-            [0, -1.5],
-            [2.7, 0],
-            [0, 1.5],
-            [-2.7, 0],
-            [0, -1.5],
-            [2.7, 0],
-            [0, 1.5],
-            [-2.7, 0],
-            [2.7, 0],
-            [-2.7, 0],
+            [0, -1.7],
+            [2.4, 0],
+            [0, 1.7],
+            [-2.4, 0],
+            [0, -1.7],
+            [2.4, 0],
+            [0, 1.7],
+            [-2.4, 0],
+            [0, -1.7],
+            [2.4, 0],
+            [0, 1.7],
+            [-2.4, 0],
+            [2.4, 0],
+            [-2.4, 0],
         ]
     )
+    # shift x coordinates
+    x_shift = -0.46
+    traj_gt_pos[:, 0] += x_shift
+
     traj_gt_poly = poly.Poly(
         _pts_m=traj_gt_pos,
         resolution=map_obj.resolution,
@@ -67,7 +71,7 @@ def main():
     ts_start = 1711648428
     traj_obj = traj.Trajectory("traj.csv", ts_start)
     # Extract point positions at timestamps
-    traj_obj_pos = traj_obj.get_pos_at_ts(traj_gt_ts)
+    traj_obj_pos, pos_idxs = traj_obj.get_pos_at_ts(traj_gt_ts)
     # Invert y coordinates
     traj_obj_pos[:, 1] *= -1
     # Convert to 2D
@@ -81,7 +85,22 @@ def main():
     # Initialize trajectory map points
     traj_poly.pts_map
 
-    # Result file
+    # Align the estimated and ground truth data using the first point
+    # Translate map and trajectory
+    orig_est = traj_poly.pts_map[0]
+    orig_gt = traj_gt_poly.pts_map[0]
+    offset = orig_gt - orig_est
+    map_obj.translate(*offset)
+    traj_poly.tr_pts_map(*offset)
+
+    # Rotate map and trajectory
+    center = (int(orig_gt[0]), int(orig_gt[1]))
+    quart = traj_obj.orientation[pos_idxs[0]]
+    z_angle = traj.quaternion_to_z_rotation(quart)
+    z_angle_deg = np.rad2deg(z_angle)
+    map_obj.rotate(-z_angle_deg, center)
+    traj_poly.rot_pts_map(-z_angle_deg, center)
+
     res_path = "results.csv"
     res_dict = {
         "ts": traj_gt_ts,
@@ -105,6 +124,12 @@ def main():
 
     while True:
         map_img = map.draw_crosshair(map_obj.map_img)
+        # Green for GT
+        map_img = poly.draw_poly(map_img, poly_gt.pts_map, color=(0, 255, 0))  # polygon
+        map_img = draw_points(
+            map_img, traj_gt_poly.pts_map, color=(0, 255, 0), thickness=2
+        )  # trajectory
+
         # Green for GT
         map_img = poly.draw_poly(map_img, poly_gt.pts_map, color=(0, 255, 0))  # polygon
         map_img = draw_points(

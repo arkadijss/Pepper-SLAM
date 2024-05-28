@@ -52,13 +52,26 @@ class Map:
         self.map_img = np.roll(self.map_img, dx, axis=1)
         self.map_img = np.roll(self.map_img, dy, axis=0)
 
-    def rotate(self, angle):
+    def rotate(self, angle, center=None):
         # Rotate the map image
         h, w = self.map_img.shape[:2]
-        rotation_center = (w / 2, h / 2)
-        rotation_matrix = cv2.getRotationMatrix2D(rotation_center, angle, 1)
+        if center is None:
+            center = (w / 2, h / 2)
+        rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1)
+
+        background_color = self.map_img[0, 0]
+        background_color = (
+            int(background_color[0]),
+            int(background_color[1]),
+            int(background_color[2]),
+        )
         self.map_img = cv2.warpAffine(
-            self.map_img, rotation_matrix, (w, h), cv2.INTER_LANCZOS4
+            self.map_img,
+            rotation_matrix,
+            (w, h),
+            cv2.INTER_LANCZOS4,
+            borderMode=cv2.BORDER_CONSTANT,
+            borderValue=background_color,
         )
 
     def add_poly_pt_map(self, pt_map):
