@@ -7,3 +7,4 @@ checkpoints
 log
 .vscode
 !.vscode/launch.json
+catkin_ws

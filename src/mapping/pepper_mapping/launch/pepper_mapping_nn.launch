@@ -5,7 +5,7 @@
     <arg name="workspace_folder" default="/workspace"/>
 
     <!-- Set PYTHONPATH to include the directory containing the scripts -->
-    <env name="PYTHONPATH" value="$(arg workspace_folder):$(arg workspace_folder)/scripts/depth_estimation/metric_depth:/home/uzer/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"/>
+    <env name="PYTHONPATH" value="$(arg workspace_folder):$(arg workspace_folder)/scripts/depth_estimation/metric_depth:$(arg workspace_folder)/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"/>
     
     <!-- RGB Image -> Depth Image -->
     <node pkg="perception" type="depth_estimation.py" name="depth_estimation">

@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/scripts:${workspaceFolder}/scripts/depth_estimation/metric_depth:/home/uzer/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"
+                "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/scripts:${workspaceFolder}/scripts/depth_estimation/metric_depth:${workspaceFolder}/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"
             }
         },
         {
@@ -23,7 +23,7 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/scripts:/home/uzer/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"
+                "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/scripts:${workspaceFolder}/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"
             }
         },
         {
@@ -34,7 +34,7 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/scripts/depth_estimation/metric_depth:/home/uzer/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"
+                "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/scripts/depth_estimation/metric_depth:${workspaceFolder}/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages"
             }
         },
     ]
