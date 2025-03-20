@@ -96,7 +96,7 @@ Visualization Manager:
       Name: DepthImage
       Normalize Range: true
       Queue Size: 2
-      Transport Hint: compressedDepth
+      Transport Hint: raw
       Unreliable: false
       Value: true
     - Class: rviz/Image
