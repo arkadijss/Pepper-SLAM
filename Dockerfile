@@ -47,7 +47,7 @@ RUN apt-get update && apt-get install -y \
 # SLAM
 RUN apt-get install -y \
     ros-$ROS_DISTRO-gmapping \
-    ros-$ROS_DISTRO-map-server \
+    ros-$ROS_DISTRO-map-server
 
 # Meshes for viz
 RUN apt-get install -y ros-$ROS_DISTRO-pepper-meshes
@@ -70,6 +70,12 @@ RUN apt-get install -y ros-$ROS_DISTRO-hector-trajectory-server
 # Bridge
 RUN apt-get install -y ros-$ROS_DISTRO-naoqi-driver
 
+# Copy the entrypoint script into the container
+COPY ./entrypoint.sh /home/$USERNAME/entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /home/$USERNAME/entrypoint.sh
+
 USER $USERNAME
 
 RUN pip install torch==2.2.1
@@ -77,9 +83,6 @@ RUN pip install torchvision==0.17.1
 RUN pip install --upgrade numpy
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-
-# Copy the entrypoint script into the container
-COPY ./entrypoint.sh /home/$USERNAME/entrypoint.sh
 
 # Set the entrypoint
 ENTRYPOINT ["/home/uzer/entrypoint.sh"]

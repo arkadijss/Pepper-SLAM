@@ -8,6 +8,7 @@ cp -r ./src/perception catkin_ws/src/perception
 cp -r ./src/mapping/pepper_mapping catkin_ws/src/pepper_mapping
 cd catkin_ws
 rosdep update && rosdep install --from-paths src/pepper_mapping -y
+source /opt/ros/$ROS_DISTRO/setup.sh
 catkin_make
 fi
 
