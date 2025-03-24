@@ -92,6 +92,8 @@ If you wish to evaluate the estimated trajectory using the evaluation script, yo
 python src/mapping/mapping/scripts/traj_rec.py
 ```
 
+Note that for ORB-SLAM3 you may change the subscribed topic from ```/trajectory``` to ```/orb_slam3_ros/trajectory```.
+
 This will create a traj.csv file, once the script has finished.
 
 Depending on the SLAM algorithm, the process varies.
