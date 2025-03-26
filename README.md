@@ -6,7 +6,7 @@ A project for running and evaluating SLAM algorithms with the Pepper robot.
 
 This project contains the necessary files to run and evaluate SLAM algorithms with the Pepper robot.
 
-Using ROS Noetic, algorithms such as Gmapping with depth camera data, Gmapping with predicted depth data using DepthAnything, and ORB-SLAM3 in a monocular setting have been implemented.
+Using ROS Noetic, algorithms such as Gmapping with depth camera data, Gmapping with predicted depth data using Depth Anything, and ORB-SLAM3 in a monocular setting have been implemented.
 
 To create an isolated environment without dependency issues, Docker was used. The project was developed in VSCode, using the VSCode Dev Containers extension, which makes development inside a container easier.
 
@@ -103,7 +103,7 @@ Depending on the SLAM algorithm, the process varies.
     roslaunch pepper_mapping pepper_mapping.launch
     ```
 
-* If you wish to run Gmapping with predicted depth data using DepthAnything, you should first download and put the trained models under ```checkpoints``` directory. To do so, refer to [Metric Depth Estimation](https://github.com/LiheYoung/Depth-Anything/tree/main/metric_depth).
+* If you wish to run Gmapping with predicted depth data using Depth Anything, you should first download and put the trained models under ```checkpoints``` directory. The expected metric depth estimation model is the indoor one trained on the NYUv2 dataset. For details, refer to [Metric Depth Estimation](https://github.com/LiheYoung/Depth-Anything/tree/main/metric_depth).
 
     Once it is done, you can launch the algorithm in a separate terminal using:
 
