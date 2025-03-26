@@ -14,7 +14,7 @@ To create an isolated environment without dependency issues, Docker was used. Th
 
 ### Dependencies
 
-The recommended way of running this project is using Docker, VSCode and VSCode Dev Containers extension. This way an isolated and consistent environment is created and you do not need to worry about dependency issues or impacting your local machine.
+The recommended way of running this project is using Docker, VSCode and VSCode Dev Containers extension. This way an isolated and consistent environment is created and you do not need to worry about dependency issues or impacting your local machine. The environment uses ROS Noetic and Ubuntu 20.04.
 
 ### Installing
 
